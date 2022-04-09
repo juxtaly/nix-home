@@ -12,6 +12,10 @@
   home.shellAliases = {
     hm = "home-manager";
   };
+  xdg.configFile.nix = {
+    source = ./nix;
+    recursive = true;
+  };
   programs.home-manager.enable = true;
   programs.tmux = {
     enable = true;
@@ -42,5 +46,9 @@
   programs.mcfly = {
     enable = true;
     keyScheme = "vim";
+  };
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 }

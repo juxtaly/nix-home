@@ -5,7 +5,7 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "goolord";
       repo = "alpha-nvim";
-      rev = "master";
+      rev = "665522838e5a5511ec888840b76bc7b9929ee115";
       sha256 = "sha256-/30QELLnb6wM9Iinp4Vykdx4wd1ZGHYdQoRR00vhCHA=";
     };
   }; in

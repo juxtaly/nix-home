@@ -16,7 +16,7 @@ omz = pkgs.fetchFromGitHub {
       cat = "bat";
     };
     initExtra = ''
-	if [ -e /home/matrix/.nix-profile/etc/profile.d/nix.sh ]; then . /home/matrix/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+	if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
     '';
     plugins = with pkgs; [
       {

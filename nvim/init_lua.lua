@@ -1,6 +1,6 @@
 require "user.options"
 require "user.keymaps"
-require "user.colorscheme"
+-- require "user.colorscheme"
 require "user.cmp"
 require "user.telescope"
 require "user.autopairs"

@@ -3,6 +3,7 @@
 {
   imports = [ ./vim.nix ./zsh.nix ];
   home.packages = with pkgs; [
+    gcc
     ripgrep
   ];
   home.sessionVariables = {

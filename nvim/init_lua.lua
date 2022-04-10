@@ -1,5 +1,6 @@
 require "user.options"
 require "user.keymaps"
+require "user.treesitter"
 -- require "user.colorscheme"
 require "user.cmp"
 require "user.telescope"

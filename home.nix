@@ -5,6 +5,7 @@
   home.packages = with pkgs; [
     gcc
     ripgrep
+    fortune
   ];
   home.sessionVariables = {
     EDITOR = "vim";

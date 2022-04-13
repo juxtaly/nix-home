@@ -44,6 +44,7 @@ let
       toggleterm-nvim
       project-nvim
       impatient-nvim
+      cheatsheet-nvim
 
       # Languages
       vim-nix
@@ -59,6 +60,8 @@ let
       nvim-autopairs
       comment-nvim
       indent-blankline-nvim
+      vim-repeat
+      lightspeed-nvim
 
       # File Explorer
       nvim-web-devicons

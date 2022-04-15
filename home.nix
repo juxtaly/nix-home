@@ -3,9 +3,33 @@
 {
   imports = [ ./vim.nix ./zsh.nix ];
   home.packages = with pkgs; [
-    gcc
-    ripgrep
+    # Modern Command Line Tools
+    ripgrep # grep
+    fd # find
+    httpie # curl
+    entr
+    dogdns # dig
+    duf # df
+    du-dust # du
+    # pgcli
+    btop # top
+    tldr # man
+    sd # sed
+    difftastic # diff
+    # plocate # locate
+    broot # tree
+    # nnn
+    jq
+    mtr # traceroute
+    hyperfine # benchmarking
+    croc # scp
+    choose # cut awk
+    lnav # browse log files
+    
     fortune
+    glow # markdown
+    lynx # web
+    gcc
   ];
   home.sessionVariables = {
     EDITOR = "vim";
@@ -23,9 +47,12 @@
     enable = true;
     keyMode = "vi";
     terminal = "screen-256color";
+    baseIndex = 1;
+    prefix = "C-a";
   };
   programs.git = {
     enable = true;
+    delta.enable = true;
   };
   programs.starship = {
     enable = true;

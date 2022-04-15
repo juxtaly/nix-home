@@ -49,6 +49,11 @@
     terminal = "screen-256color";
     baseIndex = 1;
     prefix = "C-a";
+    tmuxinator.enable = true;
+    plugins = with pkgs; [
+      tmuxPlugins.resurrect
+      tmuxPlugins.continuum
+    ];
   };
   programs.git = {
     enable = true;

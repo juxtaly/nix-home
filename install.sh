@@ -10,12 +10,12 @@ echo "substituters = https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store htt
 nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixpkgs-unstable nixpkgs
 nix-channel --update
 
+ln -s $(pwd) ~/.config/nixpkgs
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
 nix-shell '<home-manager>' -A install
 . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
-ln -s $(pwd) ~/.config/nixpkgs
-
+rm -rf ~/.config/nix/
 home-manager switch

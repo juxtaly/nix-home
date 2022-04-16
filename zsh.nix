@@ -17,6 +17,10 @@ omz = pkgs.fetchFromGitHub {
     };
     initExtra = ''
     if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+    wsl_host_ip() {
+        cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'
+    }
     '';
     plugins = with pkgs; [
       {

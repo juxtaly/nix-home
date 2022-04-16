@@ -1,5 +1,23 @@
 { config, lib, pkgs, ... }:
 
+let
+  doom-emacs = pkgs.callPackage (builtins.fetchTarball {
+    url = https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz;
+  }) {
+    doomPrivateDir = ./doom.d;
+
+    # Use the latest emacs-overlay
+    dependencyOverrides = {
+      "emacs-overlay" = (builtins.fetchTarball {
+          url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      });
+    };
+    # Look at Issue #394 
+    emacsPackagesOverlay = self: super: {
+      gitignore-mode = pkgs.emacsPackages.git-modes;
+      gitconfig-mode = pkgs.emacsPackages.git-modes;
+    };
+  }; in
 {
   imports = [ ./vim.nix ./zsh.nix ];
   home.packages = with pkgs; [
@@ -30,6 +48,11 @@
     glow # markdown
     lynx # web
     gcc
+
+    i3
+    dmenu
+
+    doom-emacs
   ];
   home.sessionVariables = {
     EDITOR = "vim";
@@ -38,6 +61,9 @@
   home.shellAliases = {
     hm = "home-manager";
   };
+  home.file.".emacs.d/init.el".text = ''
+    (load "default.el")
+  '';
   xdg.configFile.nix = {
     source = ./nix;
     recursive = true;

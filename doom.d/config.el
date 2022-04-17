@@ -11,5 +11,8 @@
 (after! lsp-mode
   (advice-remove #'lsp #'+lsp-dont-prompt-to-install-servers-maybe-a))
 
+(key-chord-mode t)
+(key-chord-define-global "kj" 'evil-normal-state)
+
 (provide 'config)
 ;;; config.el ends here

@@ -8,5 +8,8 @@
 ;; Setting the theme.
 (setq doom-theme 'doom-one)
 
+(after! lsp-mode
+  (advice-remove #'lsp #'+lsp-dont-prompt-to-install-servers-maybe-a))
+
 (provide 'config)
 ;;; config.el ends here

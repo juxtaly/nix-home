@@ -21,6 +21,7 @@ let
 {
   home.packages = [
     doom-emacs
+    pkgs.imagemagick # for pdf
   ];
   home.file.".emacs.d/init.el".text = ''
     (load "default.el")

@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ ./vim.nix ./zsh.nix ./emacs.nix ];
+  imports = [ ./vim.nix ./zsh.nix ./doom-emacs.nix ];
   home.packages = with pkgs; [
     # Modern Command Line Tools
     ripgrep # grep

@@ -3,17 +3,24 @@
 
 ;;; Code:
 ;; Setting the font.
-(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 16))
+(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18))
 
 ;; Setting the theme.
 (setq doom-theme 'doom-one)
 
+
+(add-hook! 'emacs-startup-hook #'toggle-frame-fullscreen)
+
 (after! lsp-mode
   (advice-remove #'lsp #'+lsp-dont-prompt-to-install-servers-maybe-a))
 
-(key-chord-mode t)
-(key-chord-define-global "kj" 'evil-normal-state)
+(setq evil-escape-key-sequence "kj")
 
+(use-package! smooth-scrolling
+  :config
+  (smooth-scrolling-mode))
+
+;; Setting wsl default browser.
 (when (and (eq system-type 'gnu/linux)
            (string-match
             "Linux.*Microsoft.*Linux"

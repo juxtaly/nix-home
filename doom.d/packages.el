@@ -2,7 +2,6 @@
 ;;; Commentary:
 
 ;;; Code:
-(package! key-chord)
 (package! smooth-scrolling)
 
 (provide 'packages)

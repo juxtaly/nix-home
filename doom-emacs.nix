@@ -2,9 +2,10 @@
 
 let
   doom-emacs = pkgs.callPackage (builtins.fetchTarball {
-    url = https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz;
+    url = https://github.com/nix-community/nix-doom-emacs/archive/master.tar.gz;
   }) {
-    doomPrivateDir = ./doom.d;
+    doomPrivateDir = pkgs.callPackage ./doom.d {};
+    # doomPrivateDir = ./doom.d;
 
     # Use the latest emacs-overlay
     dependencyOverrides = {

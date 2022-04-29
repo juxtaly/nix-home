@@ -30,6 +30,7 @@
     glow # markdown
     lynx # web
     gcc
+    sqlite
   ];
   home.sessionVariables = {
     EDITOR = "vim";

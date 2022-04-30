@@ -47,3 +47,8 @@
 (add-hook! haskell-mode
   (setq tab-width 2))
 #+end_src
+
+* Hacks
+#+begin_src emacs-lisp
+(add-hook! 'emacs-startup-hook #'doom-init-ui-h)
+#+end_src

@@ -61,6 +61,17 @@
   (evil-define-key nil evil-motion-state-map (kbd "C-b") #'good-scroll-down-full-screen)
   (global-set-key [next] #'good-scroll-up-full-screen)
   (global-set-key [prior] #'good-scroll-down-full-screen))
+#+end_src
+** Emacs Application Framework
+#+begin_src emacs-lisp
+(use-package! eaf
+  :load-path "~/.emacs.d/site-lisp/emacs-application-framework")
+(use-package! eaf-browser
+  :load-path "~/.emacs.d/site-lisp/emacs-application-framework/app/eaf-browser")
+(use-package! eaf-demo
+  :load-path "~/.emacs.d/site-lisp/emacs-application-framework/app/eaf-demo")
+#+end_src
+
 * Languages
 ** Haskell
 #+begin_src emacs-lisp

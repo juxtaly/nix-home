@@ -1,7 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ ./vim.nix ./zsh.nix ./doom-emacs.nix ];
+  imports = [
+    ./vim.nix 
+    ./zsh.nix 
+    ./doom-emacs.nix 
+    ./eaf.nix
+  ];
   home.packages = with pkgs; [
     # Modern Command Line Tools
     ripgrep # grep
@@ -34,7 +39,7 @@
   ];
   home.sessionVariables = {
     EDITOR = "vim";
-    NIX_PATH = "$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels:$NIX_PATH";
+    NIX_PATH = "$HOME/.nix-defexpr/channels:$NIX_PATH";
   };
   home.shellAliases = {
     hm = "home-manager";

@@ -5,13 +5,7 @@ let
     pyqt5 sip
     pyqtwebengine
     epc lxml
-    qrcode
     pysocks
-    pymupdf
-    pypinyin
-    psutil
-    retry
-    markdown
   ];
   python-with-pkgs = pkgs.python310.withPackages py-pkgs;
 in

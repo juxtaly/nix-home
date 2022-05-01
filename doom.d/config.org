@@ -11,9 +11,9 @@
 #+begin_src emacs-lisp
 (setq-default tab-width 2)
 #+end_src
-* OS
+* Browser
 ** WSL
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 ;; Setting wsl default browser.
 (when (and (eq system-type 'gnu/linux)
            (string-match
@@ -65,11 +65,23 @@
 ** Emacs Application Framework
 #+begin_src emacs-lisp
 (use-package! eaf
-  :load-path "~/.emacs.d/site-lisp/emacs-application-framework")
-(use-package! eaf-browser
-  :load-path "~/.emacs.d/site-lisp/emacs-application-framework/app/eaf-browser")
-(use-package! eaf-demo
-  :load-path "~/.emacs.d/site-lisp/emacs-application-framework/app/eaf-demo")
+  :commands (eaf-open eaf-open-browser eaf-open-pdf-from-history)
+  :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
+  :config
+  (use-package! eaf-browser
+    :load-path "~/.emacs.d/site-lisp/emacs-application-framework/app/eaf-browser"
+    :config
+    (setq
+     browse-url-browser-function #'eaf-open-browser))
+  (use-package! eaf-pdf-viewer
+    :load-path "~/.emacs.d/site-lisp/emacs-application-framework/app/eaf-pdf-viewer")
+  (use-package! eaf-demo
+    :load-path "~/.emacs.d/site-lisp/emacs-application-framework/app/eaf-demo")
+  (use-package! eaf-evil
+    :after evil
+    :load-path "~/.emacs.d/site-lisp/emacs-application-framework/extension"
+    :config
+    (setq eaf-evil-leader-key "SPC")))
 #+end_src
 
 * Languages

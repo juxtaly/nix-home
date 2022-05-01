@@ -30,17 +30,37 @@
 (after! lsp-mode
   (advice-remove #'lsp #'+lsp-dont-prompt-to-install-servers-maybe-a))
 #+end_src
-** Evil mode
+** Evil
 #+begin_src emacs-lisp
 (setq evil-escape-key-sequence "kj")
 #+end_src
-** Company mode
+** Company
 #+begin_src emacs-lisp
 (setq
- company-idle-delay 0
- company-minimum-prefix-length 1
+ company-idle-delay 0.2
+ company-minimum-prefix-length 2
  company-selection-wrap-around t)
 #+end_src
+** Good scroll
+#+begin_src emacs-lisp
+(defun good-scroll-up-half-screen ()
+  (interactive)
+  (good-scroll-move (/ (good-scroll--window-usable-height) 2)))
+(defun good-scroll-down-half-screen ()
+  (interactive)
+  (good-scroll-move (- (/ (good-scroll--window-usable-height) 2))))
+(use-package! good-scroll
+  :after evil
+  :config
+  (good-scroll-mode 1)
+  (evil-define-key nil evil-motion-state-map (kbd "C-d") #'good-scroll-up-half-screen)
+  (evil-define-key nil evil-motion-state-map (kbd "C-u") #'good-scroll-down-half-screen)
+  (evil-define-key nil evil-motion-state-map (kbd "C-e") #'good-scroll-up)
+  (evil-define-key nil evil-motion-state-map (kbd "C-y") #'good-scroll-down)
+  (evil-define-key nil evil-motion-state-map (kbd "C-f") #'good-scroll-up-full-screen)
+  (evil-define-key nil evil-motion-state-map (kbd "C-b") #'good-scroll-down-full-screen)
+  (global-set-key [next] #'good-scroll-up-full-screen)
+  (global-set-key [prior] #'good-scroll-down-full-screen))
 * Languages
 ** Haskell
 #+begin_src emacs-lisp

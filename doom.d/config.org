@@ -5,11 +5,21 @@
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18))
 (setq doom-theme 'doom-one)
+(setq doom-modeline-height 30     ;; sets modeline height
+      doom-modeline-bar-width 5   ;; sets right bar width
+      doom-modeline-persp-name t  ;; adds perspective name to modeline
+      doom-modeline-persp-icon t) ;; adds folder icon next to persp name
 (add-hook! 'emacs-startup-hook #'toggle-frame-fullscreen)
 #+end_src
 * Edit
+** Indent
 #+begin_src emacs-lisp
 (setq-default tab-width 2)
+#+end_src
+** Global Auto Revert
+#+begin_src emacs-lisp
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
 #+end_src
 * Browser
 ** WSL
@@ -25,10 +35,18 @@
    browse-url-browser-function #'browse-url-generic))
 #+end_src
 * Plugins
-** Lsp mode
+** LSP mode
 #+begin_src emacs-lisp
 (after! lsp-mode
   (advice-remove #'lsp #'+lsp-dont-prompt-to-install-servers-maybe-a))
+#+end_src
+*** LSP haskell
+#+begin_src emacs-lisp
+(after! haskell
+  (setq
+   lsp-haskell-check-project nil
+   lsp-haskell-plugin-ghcide-completions-config-snippets-on nil
+   lsp-haskell-max-completions 20))
 #+end_src
 ** Evil
 #+begin_src emacs-lisp
@@ -36,10 +54,18 @@
 #+end_src
 ** Company
 #+begin_src emacs-lisp
-(setq
- company-idle-delay 0.2
- company-minimum-prefix-length 2
- company-selection-wrap-around t)
+(after! company
+  (setq
+   company-transformers '(company-sort-by-occurrence company-sort-prefer-same-case-prefix)
+   company-idle-delay 0.2
+   company-minimum-prefix-length 2
+   company-selection-wrap-around t)
+  (map! (:when (featurep! :completion company)
+         (:after company
+          (:map company-active-map
+           "C-SPC" #'company-complete-common-or-cycle
+           "TAB"   #'company-complete-selection
+           [tab]   #'company-complete-selection)))))
 #+end_src
 ** Good scroll
 #+begin_src emacs-lisp
@@ -74,7 +100,17 @@
     :load-path "~/.emacs.d/site-lisp/emacs-application-framework/extension"))
 (setq browse-url-browser-function #'eaf-open-browser)
 #+end_src
-
+** Beacon
+#+begin_src emacs-lisp
+(use-package! beacon
+  :config
+  (beacon-mode 1))
+#+end_src
+** Notes
+#+begin_src emacs-lisp
+(setq org-directory "~/notes")
+(setq deft-directory "~/notes")
+#+end_src
 * Languages
 ** Haskell
 #+begin_src emacs-lisp

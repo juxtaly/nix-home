@@ -2,12 +2,12 @@
 
 {
   imports = [
+    ./user.nix
     ./vim.nix 
     ./zsh.nix 
-    ./doom-emacs.nix 
-    ./eaf.nix
     ./programs.nix
   ];
+  home.stateVersion = "22.05";
   home.sessionVariables = {
     EDITOR = "vim";
     NIX_PATH = "$HOME/.nix-defexpr/channels:$NIX_PATH";

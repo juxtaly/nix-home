@@ -6,7 +6,7 @@
     ripgrep # grep
     fd # find
     httpie # curl
-    entr
+    entr # Run arbitrary commands when files change
     dogdns # dig
     duf # df
     du-dust # du
@@ -26,6 +26,7 @@
     lnav # browse log files
 
     fortune
+    gum  # interactive shell script
     glow # markdown
     lynx # web
     gcc

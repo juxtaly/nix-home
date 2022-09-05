@@ -29,22 +29,22 @@
     gum  # interactive shell script
     glow # markdown
     lynx # web
-    gcc
     sqlite
     unzip
+    cloc
   ];
-  programs.tmux = {
-    enable = true;
-    keyMode = "vi";
-    terminal = "screen-256color";
-    baseIndex = 1;
-    prefix = "C-a";
-    tmuxinator.enable = true;
-    plugins = with pkgs; [
-      tmuxPlugins.resurrect
-      tmuxPlugins.continuum
-    ];
-  };
+  # programs.tmux = {
+  #   enable = true;
+  #   keyMode = "vi";
+  #   terminal = "screen-256color";
+  #   baseIndex = 1;
+  #   prefix = "C-a";
+  #   tmuxinator.enable = true;
+  #   plugins = with pkgs; [
+  #     tmuxPlugins.resurrect
+  #     tmuxPlugins.continuum
+  #   ];
+  # };
   programs.git = {
     enable = true;
     delta.enable = true;
@@ -74,5 +74,22 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+  programs.helix = {
+    enable = true;
+    settings = {
+      theme = "onedark";
+      editor.cursor-shape = {
+        insert = "bar";
+        normal = "block";
+        select = "underline";
+      };
+      editor.file-picker = {
+        hidden = false;
+      };
+    };
+  };
+  programs.zellij = {
+    enable = true;
   };
 }

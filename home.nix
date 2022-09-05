@@ -3,13 +3,13 @@
 {
   imports = [
     ./user.nix
-    ./vim.nix 
     ./zsh.nix 
     ./programs.nix
   ];
   home.stateVersion = "22.05";
   home.sessionVariables = {
-    EDITOR = "vim";
+    EDITOR = "hx";
+    COLORTERM = "truecolor";
     NIX_PATH = "$HOME/.nix-defexpr/channels:$NIX_PATH";
   };
   home.shellAliases = {

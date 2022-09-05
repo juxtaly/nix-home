@@ -12,21 +12,12 @@ omz = pkgs.fetchFromGitHub {
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
+    enableSyntaxHighlighting = true;
     shellAliases = {
       cat = "bat";
     };
     initExtra = builtins.readFile ./zsh/zshrc;
     plugins = with pkgs; [
-      {
-        name = "zsh-syntax-highlighting";
-        src = fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-syntax-highlighting";
-          rev = "0.7.1";
-          sha256 = "sha256-gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
-        };
-        file = "zsh-syntax-highlighting.zsh";
-      }
       {
         name = "z";
         src = fetchFromGitHub {
@@ -56,11 +47,6 @@ omz = pkgs.fetchFromGitHub {
         name = "ohmyzsh/git-extras";
         src = "${omz}/plugins/git-extras";
         file = "git-extras.plugin.zsh";
-      }
-      {
-        name = "ohmyzsh/tmux";
-        src = "${omz}/plugins/tmux";
-        file = "tmux.plugin.zsh";
       }
     ];
   };

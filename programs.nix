@@ -11,14 +11,11 @@
     duf # df
     du-dust # du
     # pgcli
-    btop # top
     tldr # man
     sd # sed
     difftastic # diff
     # plocate # locate
-    broot # tree
     # nnn
-    jq
     mtr # traceroute
     hyperfine # benchmarking
     croc # scp
@@ -90,6 +87,15 @@
     };
   };
   programs.zellij = {
+    enable = true;
+  };
+  programs.btop = {
+    enable = true;
+  };
+  programs.broot = {
+    enable = true;
+  };
+  programs.jq = {
     enable = true;
   };
 }

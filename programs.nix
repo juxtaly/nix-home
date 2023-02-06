@@ -29,6 +29,9 @@
     sqlite
     unzip
     cloc
+    nb
+    w3m
+    nmap
   ];
   # programs.tmux = {
   #   enable = true;
@@ -96,6 +99,15 @@
     enable = true;
   };
   programs.jq = {
+    enable = true;
+  };
+  programs.lazygit = {
+    enable = true;
+  };
+  programs.kakoune = {
+    enable = true;
+  };
+  programs.pandoc = {
     enable = true;
   };
 }

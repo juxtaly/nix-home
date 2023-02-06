@@ -5,8 +5,9 @@
     ./user.nix
     ./zsh.nix 
     ./programs.nix
+    ./nvim.nix
   ];
-  home.stateVersion = "22.05";
+  home.stateVersion = "23.05";
   home.sessionVariables = {
     EDITOR = "hx";
     COLORTERM = "truecolor";
@@ -14,6 +15,7 @@
   };
   home.shellAliases = {
     hm = "home-manager";
+    lg = "lazygit";
   };
   xdg.configFile.nix = {
     source = ./nix;

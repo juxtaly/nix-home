@@ -17,6 +17,8 @@ let
       gitignore-mode = pkgs.emacsPackages.git-modes;
       gitconfig-mode = pkgs.emacsPackages.git-modes;
     };
+
+    extraPackages = epkgs : [epkgs.vterm];
   }; in
 {
   home.packages = [

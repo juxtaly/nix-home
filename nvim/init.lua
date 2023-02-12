@@ -30,6 +30,32 @@ require('packer').startup(function(use)
     },
   }
 
+  use { -- DAP Configuration & Plugins
+    'jay-babu/mason-nvim-dap.nvim',
+    requires = {
+      'williamboman/mason.nvim',
+      'mfussenegger/nvim-dap',
+    },
+  }
+
+  -- neotest -- An extensible framework for interacting with tests within NeoVim.
+  use {
+    'nvim-neotest/neotest',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'antoinemadec/FixCursorHold.nvim',
+      'rouge8/neotest-rust' -- Require 'cargo install cargo-nextest'
+    },
+  }
+
+  use {
+    'rcarriga/nvim-dap-ui',
+    requires = {
+      'mfussenegger/nvim-dap',
+    }
+  }
+
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
@@ -357,7 +383,9 @@ local servers = {
 }
 
 -- Setup neovim lua configuration
-require('neodev').setup()
+require('neodev').setup({
+  library = { plugins = { "nvim-dap-ui", "neotest" }, types = true },
+})
 --
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -385,6 +413,87 @@ mason_lspconfig.setup_handlers {
 
 -- Turn on lsp status information
 require('fidget').setup()
+
+-- DAP settings
+
+local mason_nvim_dap_ok, mason_nvim_dap = pcall(require, 'mason-nvim-dap')
+if mason_nvim_dap_ok then
+  mason_nvim_dap.setup({
+    automatic_setup = true
+  })
+  mason_nvim_dap.setup_handlers()
+end
+
+local dapui_ok, dapui = pcall(require, 'dapui')
+if dapui_ok then
+  dapui.setup({
+    controls = {
+      enabled = false
+    },
+    icons = {
+      collapsed = ">",
+      current_frame = "=",
+      expanded = "v",
+    }
+  })
+end
+
+local dap_ok, _ = pcall(require, 'dap')
+if dap_ok then
+  vim.keymap.set('n', '<F5>', function() require('dap').continue() end, { desc = 'DAP: Continue' })
+  vim.keymap.set('n', '<F6>', function() require('dap').step_over() end, { desc = 'DAP: Step over' })
+  vim.keymap.set('n', '<F7>', function() require('dap').step_into() end, { desc = 'DAP: Step into' })
+  vim.keymap.set('n', '<F8>', function() require('dap').step_out() end, { desc = 'DAP: Step out' })
+  vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end, { desc = 'DAP: Toggle [B]reakpoint' })
+  vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end, { desc = 'DAP: Open [R]epl' })
+  vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end, { desc = 'DAP: Run [L]ast' })
+  vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+    require('dap.ui.widgets').hover()
+  end, { desc = 'DAP: [H]over' })
+  vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+    require('dap.ui.widgets').preview()
+  end, { desc = 'DAP: [P]review' })
+  vim.keymap.set('n', '<Leader>df', function()
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.frames)
+  end, { desc = 'DAP: Show [F]rames' })
+  vim.keymap.set('n', '<Leader>ds', function()
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.scopes)
+  end, { desc = 'DAP: Show [S]copes' })
+end
+
+-- Test framework settings
+local neotest_ok, neotest = pcall(require, 'neotest')
+if neotest_ok then
+  neotest.setup({
+    adapters = {
+      require("neotest-rust")
+    },
+    icons = {
+      child_indent = "│",
+      child_prefix = "├",
+      collapsed = "─",
+      expanded = "╮",
+      failed = "x",
+      final_child_indent = " ",
+      final_child_prefix = "╰",
+      non_collapsible = "─",
+      passed = "P",
+      running = "R",
+      running_animated = { "/", "|", "\\", "-", "/", "|", "\\", "-" },
+      skipped = "S",
+      unknown = "U"
+    },
+  })
+
+  vim.keymap.set('n', '<F9>', function ()
+    require('neotest').run.run(vim.fn.expand('%'))
+  end, { desc = 'Test: Run all tests in this file' })
+  vim.keymap.set('n', '<F10>', function ()
+    require('neotest').summary.toggle()
+  end, { desc = 'Test: Toggle summary' })
+end
 
 -- nvim-cmp setup
 local cmp = require 'cmp'

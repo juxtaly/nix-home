@@ -1,4 +1,4 @@
-return function(use)
+local function plugins(use)
 
   -- which-key.nvim -- 💥 Create key bindings that stick. WhichKey is a lua plugin for Neovim 0.5 that displays a popup with possible keybindings of the command you started typing.
   use({
@@ -108,7 +108,7 @@ return function(use)
   use({
     'karb94/neoscroll.nvim',
     config = function ()
-      require('neoscroll').setup({
+      -- require('neoscroll').setup({
       --   -- All these keys will be mapped to their corresponding default scrolling animation
       --   mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
       --     '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
@@ -120,7 +120,7 @@ return function(use)
       --   pre_hook = nil,              -- Function to run before the scrolling animation starts
       --   post_hook = nil,             -- Function to run after the scrolling animation ends
       --   performance_mode = false,    -- Disable "Performance Mode" on all buffers.
-      })
+      -- })
     end
   })
 
@@ -175,4 +175,87 @@ return function(use)
     end
   })
 
+  -- toggleterm.nvim -- A neovim lua plugin to help easily manage multiple terminal windows
+  use({
+    'akinsho/toggleterm.nvim',
+    config = function ()
+      require('toggleterm').setup({
+        open_mapping = [[<leader>t]],
+        insert_mappings = false
+      })
+    end
+  })
+
+  use 'ThePrimeagen/vim-be-good'
+
+  -- trouble.nvim -- 🚦 A pretty diagnostics, references, telescope results, quickfix and location list to help you solve all the trouble your code is causing.
+  use({
+    "folke/trouble.nvim",
+    requires = "nvim-tree/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  })
+
+  -- noice.nvim -- 💥 Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
+  use({
+    "folke/noice.nvim",
+    config = function()
+      require("noice").setup({
+        -- add any options here
+      })
+    end,
+    requires = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    }
+  })
+
+  -- zen-mode.nvim -- 🧘 Distraction-free coding for Neovim
+  use({
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  })
+
+  -- TODO: default mapping conflict with leap.nvim, consider change default mappings of leap.nvim
+  -- nvim-surround -- Add/change/delete surrounding delimiter pairs with ease. Written with ❤️ in Lua.
+  -- use({
+  --   "kylechui/nvim-surround",
+  --   tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+  --   config = function()
+  --     require("nvim-surround").setup({
+  --       -- Configuration here, or leave empty to use defaults
+  --     })
+  --   end
+  -- })
+
+  -- competitest.nvim -- CompetiTest.nvim is a Neovim plugin to automate testcases management and checking for Competitive Programming
+  use({
+    'xeluxee/competitest.nvim',
+    requires = 'MunifTanjim/nui.nvim',
+    config = function()
+      require('competitest').setup()
+    end
+  })
+
 end
+
+local function _plugins(use)
+  use 'ThePrimeagen/vim-be-good'
+end
+
+return plugins

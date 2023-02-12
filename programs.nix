@@ -91,6 +91,11 @@
   };
   programs.zellij = {
     enable = true;
+    settings = {
+      pane_frames = false;
+      default_mode = "locked";
+      default_layout = "compact";
+    };
   };
   programs.btop = {
     enable = true;

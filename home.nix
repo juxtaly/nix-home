@@ -9,7 +9,6 @@
   ];
   home.stateVersion = "23.05";
   home.sessionVariables = {
-    EDITOR = "hx";
     COLORTERM = "truecolor";
     NIX_PATH = "$HOME/.nix-defexpr/channels:$NIX_PATH";
   };

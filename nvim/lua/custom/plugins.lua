@@ -198,6 +198,25 @@ local function plugins(use)
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
       }
+
+      vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
+        {silent = true, noremap = true}
+      )
     end
   })
 
@@ -207,7 +226,27 @@ local function plugins(use)
     config = function()
       require("noice").setup({
         -- add any options here
+        lsp = {
+
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true,
+          },
+        },
       })
+
+      vim.keymap.set({"n", "i", "s"}, "<c-f>", function()
+        if not require("noice.lsp").scroll(4) then
+          return "<c-f>"
+        end
+      end, { silent = true, expr = true })
+
+      vim.keymap.set({"n", "i", "s"}, "<c-b>", function()
+        if not require("noice.lsp").scroll(-4) then
+          return "<c-b>"
+        end
+      end, { silent = true, expr = true })
     end,
     requires = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -250,6 +289,40 @@ local function plugins(use)
     config = function()
       require('competitest').setup()
     end
+  })
+
+  -- aerial.nvim -- Neovim plugin for a code outline window
+  use({
+    'stevearc/aerial.nvim',
+    config = function ()
+      require('aerial').setup({
+        -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+        on_attach = function(bufnr)
+          -- Jump forwards/backwards with '{' and '}'
+          vim.keymap.set('n', '[a', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+          vim.keymap.set('n', ']a', '<cmd>AerialNext<CR>', {buffer = bufnr})
+        end
+      })
+      vim.keymap.set('n', '<leader>v', '<cmd>AerialToggle!<CR>', { desc = 'Toggle Aerial', silent = true })
+    end
+  })
+
+  -- overseer.nvim -- A task runner and job management plugin for Neovim
+  use({
+    'stevearc/overseer.nvim',
+    config = function ()
+      require('overseer').setup()
+    end
+  })
+
+  -- haskell-tools.nvim -- Supercharge your Haskell experience in neovim! 
+  use({
+    'mrcjkb/haskell-tools.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim', -- optional
+    },
+    branch = '1.x.x', -- recommended
   })
 
 end

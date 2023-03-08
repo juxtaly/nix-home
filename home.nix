@@ -16,9 +16,9 @@
     hm = "home-manager";
     lg = "lazygit";
   };
-  xdg.configFile.nix = {
-    source = ./nix;
-    recursive = true;
-  };
+  # xdg.configFile.nix = {
+  #   source = ./nix;
+  #   recursive = true;
+  # };
   programs.home-manager.enable = true;
 }

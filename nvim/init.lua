@@ -191,10 +191,22 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- See `:help lualine.txt`
 require('lualine').setup {
   options = {
-    icons_enabled = false,
+    icons_enabled = true,
     theme = 'onedark',
     component_separators = '|',
     section_separators = '',
+  },
+  extensions = { 'aerial', 'nvim-tree', 'quickfix', 'toggleterm' },
+  sections = {
+    lualine_c = {
+      {
+        'filename',
+        file_status = true,
+        newfile_status = true,
+        path = 3,
+        shorting_target = 40,
+      }
+    },
   },
 }
 

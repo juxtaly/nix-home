@@ -5,6 +5,8 @@ install_nix() {
     sh <(curl -L https://nixos.org/nix/install) --no-daemon
     # curl -L https://mirrors.tuna.tsinghua.edu.cn/nix/latest/install | sh
     . $HOME/.nix-profile/etc/profile.d/nix.sh
+
+    test -d $HOME/.config/nix || (mkdir $HOME/.config/nix && cp ./nix/nix.conf $HOME/.config/nix)
 }
 
 install_home_manager() {

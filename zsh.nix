@@ -17,6 +17,7 @@ omz = pkgs.fetchFromGitHub {
       cat = "bat";
     };
     initExtra = builtins.readFile ./zsh/zshrc;
+    envExtra = builtins.readFile ./zsh/zshenv;
     plugins = with pkgs; [
       {
         name = "z";

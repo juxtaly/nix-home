@@ -102,6 +102,10 @@ cmp.setup {
   snippet = {
     expand = expand_snippet,
   },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   formatting = {
     format = function(entry, vim_item)
       -- Kind icons
@@ -112,7 +116,9 @@ cmp.setup {
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
         nvim_lua = "[Lua]",
-        latex_symbols = "[LaTeX]",
+        path = "[Path]",
+        nvim_lsp_document_symbol = "[Doc Sym]",
+        cmdline = "[CMD]",
       })[entry.source.name]
       return vim_item
     end
@@ -121,10 +127,17 @@ cmp.setup {
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
+    ['<CR>'] = cmp.mapping({
+      i = function (fallback)
+        if cmp.visible() and cmp.get_active_entry() then
+          cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+        else
+          fallback()
+        end
+      end,
+      s = cmp.mapping.confirm({ select = true }),
+    }),
+    ['<C-e>'] = cmp.mapping.abort(),
     ['<Tab>'] = cmp.mapping(super_tab, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(super_stab, { 'i', 's' }),
   },
@@ -133,10 +146,53 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   }, {
-    { name = 'buffer', keyword_length = 5 },
-  }),
+      { name = 'buffer', keyword_length = 5 },
+    }),
   experimental = {
     native_menu = false,
     ghost_text = true,
   },
+  enabled = function ()
+    -- disable completion in comments
+    local context = require 'cmp.config.context'
+    -- keep command mode completion enabled when cursor is in a comment
+    if vim.api.nvim_get_mode().mode == 'c' then
+      return true
+    else
+      return not context.in_treesitter_capture("comment")
+        and not context.in_syntax_group("Comment")
+    end
+  end
 }
+
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'buffer' }
+  })
+})
+
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'nvim_lsp_document_symbol' } -- Trigger: @
+  }, {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+      { name = 'cmdline' }
+    })
+})
+
+local has_autopairs, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
+if has_autopairs then
+  cmp.event:on(
+    'confirm_done',
+    cmp_autopairs.on_confirm_done()
+  )
+end

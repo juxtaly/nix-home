@@ -109,7 +109,10 @@ require('packer').startup(function(use)
     requires = {
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp-document-symbol',
       'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip'
     },
@@ -137,6 +140,7 @@ require('packer').startup(function(use)
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use 'windwp/nvim-autopairs' -- autopairs for neovim written by lua
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -180,6 +184,7 @@ require('plugins.neodev')
 require('plugins.lsp')
 require('plugins.dap')
 require('plugins.neotest')
+require('plugins.autopairs')
 require('plugins.cmp')
 
 -- The line beneath this is called `modeline`. See `:help modeline`

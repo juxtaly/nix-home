@@ -1,16 +1,16 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.neovim = {
+  programs.neovim = let
+    neovimPrivateDir = ./nvim;
+  in {
     enable = true;
     vimAlias = true;
     defaultEditor = true;
-    # extraLuaConfig = builtins.readFile ./kickstart.nvim/init.lua;
-  };
-  xdg.configFile = {
-    nvim = {
-      source = ./nvim;
-      recursive = true;
-    };
+    extraLuaConfig = ''
+      vim.opt.runtimepath:append('${neovimPrivateDir}')
+      vim.opt.runtimepath:append('${neovimPrivateDir}/after')
+      require('init')
+    '';
   };
 }

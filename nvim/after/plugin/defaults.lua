@@ -12,7 +12,7 @@ if vim.g.neovide then
   end, { desc = 'Toggle neovide fullscreen', silent = true})
 end
 
-vim.keymap.set('n', '<leader><leader>r', function ()
+vim.keymap.set('n', '<leader>rr', function ()
   vim.cmd([[
     source $MYVIMRC
     runtime! plugin/**/*.vim

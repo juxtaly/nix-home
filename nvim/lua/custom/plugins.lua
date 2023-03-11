@@ -340,10 +340,15 @@ local function plugins(use)
     }
   })
 
-end
+  -- alpha-nvim -- a lua powered greeter like vim-startify / dashboard-nvim
+  use {
+    'goolord/alpha-nvim',
+    requires = { 'nvim-tree/nvim-web-devicons' },
+    config = function ()
+        require'alpha'.setup(require'alpha.themes.startify'.config)
+    end
+  }
 
-local function _plugins(use)
-  use 'ThePrimeagen/vim-be-good'
 end
 
 return plugins

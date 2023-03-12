@@ -12,6 +12,19 @@ return function (use)
             ["cmp.entry.get_documentation"] = true,
           },
         },
+        -- NOTE: noice has issues with neovide
+        -- See: https://github.com/folke/noice.nvim/issues/17
+        --      https://github.com/neovide/neovide/issues/1751
+        --      https://github.com/neovim/neovim/issues/22344
+        -- Seems like disabling messages suspends these issues
+        messages = {
+          enabled = true,
+          view = false, -- default view for messages
+          -- view_error = "notify", -- view for errors
+          -- view_warn = "notify", -- view for warnings
+          -- view_history = "messages", -- view for :messages
+          -- view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+        },
       })
 
       vim.keymap.set({"n", "i", "s"}, "<c-f>", function()

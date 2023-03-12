@@ -60,5 +60,35 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = highlight_group,
 	pattern = "*",
 })
+local ft_group = vim.api.nvim_create_augroup("_MyFileType", { clear = true })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	group = ft_group,
+	pattern = { "qf", "help", "man", "lspinfo" },
+	callback = function()
+		vim.keymap.set("n", "q", "<cmd>close<cr>", { silent = true, buffer = 0 })
+	end,
+})
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	group = ft_group,
+	pattern = { "qf" },
+	command = "set nobuflisted",
+})
+local wrap_and_spell_fts = { "gitcommit", "markdown" }
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	group = ft_group,
+	pattern = wrap_and_spell_fts,
+	command = "set wrap",
+})
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	group = ft_group,
+	pattern = wrap_and_spell_fts,
+	command = "set spell",
+})
+local auto_resize_group = vim.api.nvim_create_augroup("_MyAutoResize", { clear = true })
+vim.api.nvim_create_autocmd({ "VimResized" }, {
+	group = auto_resize_group,
+	pattern = { "*" },
+	command = "tabdo wincmd =",
+})
 
 vim.api.nvim_create_user_command("BufOnly", "<cmd>%bd|e#<cr>", { desc = "Close all other buffers" })

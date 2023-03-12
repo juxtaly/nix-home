@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     # Modern Command Line Tools
     ripgrep # grep
@@ -23,7 +26,7 @@
     lnav # browse log files
 
     fortune
-    gum  # interactive shell script
+    gum # interactive shell script
     glow # markdown
     lynx # web
     sqlite

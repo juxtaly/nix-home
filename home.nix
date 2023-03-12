@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./user.nix
-    ./zsh.nix 
+    ./zsh.nix
     ./programs.nix
     ./nvim.nix
   ];

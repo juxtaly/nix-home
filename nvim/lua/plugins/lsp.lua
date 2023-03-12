@@ -102,6 +102,7 @@ if has_null_ls then
 	if has_mason_null_ls then
 		mason_null_ls.setup({
 			ensure_installed = { "stylua" },
+			automatic_setup = true,
 		})
 		mason_null_ls.setup_handlers({
 			function(source_name, methods)
@@ -111,10 +112,35 @@ if has_null_ls then
 				-- please add the below.
 				require("mason-null-ls.automatic_setup")(source_name, methods)
 			end,
-			stylua = function(source_name, methods)
+			stylua = function(source_name, methods) -- no need if automatic_setup is set to true
 				null_ls.register(null_ls.builtins.formatting.stylua)
 			end,
 		})
 	end
-	null_ls.setup()
+	local sources = {
+		-- Anything not supported by mason
+	}
+	local packages = {
+		code_actions = { "statix" },
+		completion = {},
+		diagnostics = { "deadnix", "statix" },
+		formatting = { "alejandra" },
+		hover = {},
+	}
+	local source_mappings = require("mason-null-ls.mappings.source")
+	for methods, ps in pairs(packages) do
+		for _, pkg in ipairs(ps) do
+			if vim.fn.executable(pkg) == 1 then
+				local source_name = source_mappings.getNullLsFromPackage(pkg)
+				local source = null_ls.builtins[methods][source_name]
+				if source then
+					table.insert(sources, source)
+				end
+			end
+		end
+	end
+
+	null_ls.setup({
+		sources = sources,
+	})
 end

@@ -45,10 +45,10 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true, noremap = true })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true, noremap = true })
-vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true, noremap = true })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true, noremap = true })
+vim.keymap.set({ "n", "t" }, "<C-j>", "<C-w>j", { silent = true, noremap = true })
+vim.keymap.set({ "n", "t" }, "<C-k>", "<C-w>k", { silent = true, noremap = true })
+vim.keymap.set({ "n", "t" }, "<C-h>", "<C-w>h", { silent = true, noremap = true })
+vim.keymap.set({ "n", "t" }, "<C-l>", "<C-w>l", { silent = true, noremap = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -60,3 +60,5 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = highlight_group,
 	pattern = "*",
 })
+
+vim.api.nvim_create_user_command("BufOnly", "<cmd>%bd|e#<cr>", { desc = "Close all other buffers" })

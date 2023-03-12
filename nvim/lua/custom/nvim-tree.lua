@@ -19,7 +19,7 @@ return function(use)
 				if node.nodes then
 					local opend = 0
 					for _, cnode in ipairs(node.nodes) do
-						if opend > 20 then
+						if opend > 50 then
 							vim.notify("Too many files opend!", vim.log.levels.WARN)
 							return
 						end
@@ -34,11 +34,6 @@ return function(use)
 			end, { desc = "Open all files belonging to the code under the cursor, one level deep" })
 			vim.api.nvim_create_autocmd({ "QuitPre" }, {
 				callback = api.tree.close,
-			})
-			vim.api.nvim_create_autocmd({ "VimEnter" }, {
-				callback = function()
-					api.tree.open()
-				end,
 			})
 		end,
 	})

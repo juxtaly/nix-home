@@ -1,6 +1,6 @@
-local ok, comment = pcall(require, 'Comment')
+local ok, comment = pcall(require, "Comment")
 if not ok then
-  return
+	return
 end
 
 -- Enable Comment.nvim

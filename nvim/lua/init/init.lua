@@ -65,7 +65,8 @@ require("packer").startup(function(use)
 	-- Package manager
 	use("wbthomason/packer.nvim")
 
-	use({ -- LSP Configuration & Plugins
+	use({
+		-- LSP Configuration & Plugins
 		"neovim/nvim-lspconfig",
 		requires = {
 			-- Automatically install LSPs to stdpath for neovim
@@ -87,7 +88,8 @@ require("packer").startup(function(use)
 		},
 	})
 
-	use({ -- DAP Configuration & Plugins
+	use({
+		-- DAP Configuration & Plugins
 		"mfussenegger/nvim-dap",
 		requires = {
 			"williamboman/mason.nvim",
@@ -107,7 +109,8 @@ require("packer").startup(function(use)
 		},
 	})
 
-	use({ -- Autocompletion
+	use({
+		-- Autocompletion
 		"hrsh7th/nvim-cmp",
 		requires = {
 			"hrsh7th/cmp-nvim-lua",
@@ -121,14 +124,16 @@ require("packer").startup(function(use)
 		},
 	})
 
-	use({ -- Highlight, edit, and navigate code
+	use({
+		-- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
 		run = function()
 			pcall(require("nvim-treesitter.install").update({ with_sync = true }))
 		end,
 	})
 
-	use({ -- Additional text objects via treesitter
+	use({
+		-- Additional text objects via treesitter
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		after = "nvim-treesitter",
 	})

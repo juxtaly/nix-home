@@ -6,21 +6,7 @@ if mason_nvim_dap_ok then
   mason_nvim_dap.setup_handlers()
 end
 
-local dapui_ok, dapui = pcall(require, 'dapui')
-if dapui_ok then
-  dapui.setup({
-    controls = {
-      enabled = false
-    },
-    icons = {
-      collapsed = ">",
-      current_frame = "=",
-      expanded = "v",
-    }
-  })
-end
-
-local dap_ok, _ = pcall(require, 'dap')
+local dap_ok, dap = pcall(require, 'dap')
 if dap_ok then
   vim.keymap.set('n', '<F5>', function() require('dap').continue() end, { desc = 'DAP: Continue' })
   vim.keymap.set('n', '<F6>', function() require('dap').step_over() end, { desc = 'DAP: Step over' })
@@ -43,4 +29,27 @@ if dap_ok then
     local widgets = require('dap.ui.widgets')
     widgets.centered_float(widgets.scopes)
   end, { desc = 'DAP: Show [S]copes' })
+
+  local dapui_ok, dapui = pcall(require, 'dapui')
+  if dapui_ok then
+    dapui.setup({
+      controls = {
+        enabled = false
+      },
+      icons = {
+        collapsed = ">",
+        current_frame = "=",
+        expanded = "v",
+      }
+    })
+    dap.listeners.after.event_initialized["dapui_config"] = function()
+      dapui.open()
+    end
+    dap.listeners.before.event_terminated["dapui_config"] = function()
+      dapui.close()
+    end
+    dap.listeners.before.event_exited["dapui_config"] = function()
+      dapui.close()
+    end
+  end
 end

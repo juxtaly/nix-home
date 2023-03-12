@@ -20,5 +20,6 @@ vim.keymap.set('n', '<leader>rr', function ()
     runtime! after/**/*.vim
     runtime! after/**/*.lua
   ]])
+  vim.notify("New configs loaded!", vim.log.levels.INFO)
 end, { desc = 'Reload configs and plugins', silent = true})
 

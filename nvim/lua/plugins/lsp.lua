@@ -56,16 +56,9 @@ local servers = {
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
-  rust_analyzer = {},
+  -- rust_analyzer = {},
   lua_ls = {},
   -- tsserver = {},
-
-  -- sumneko_lua = {
-  --   Lua = {
-  --     workspace = { checkThirdParty = false },
-  --     telemetry = { enable = false },
-  --   },
-  -- },
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers

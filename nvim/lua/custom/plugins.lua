@@ -28,6 +28,8 @@ local function plugins(use)
     'overseer',
     -- haskell-tools.nvim -- Supercharge your Haskell experience in neovim! 
     'haskell-tools',
+    -- rust-tools.nvim -- Tools for better development in rust using neovim's builtin lsp
+    'rust-tools',
     -- ChatGPT.nvim -- Neovim plugin for interacting with OpenAI GPT-3 chatbot, providing an easy interface for exploring GPT-3 and NLP. 
     'ChatGPT',
     -- alpha-nvim -- a lua powered greeter like vim-startify / dashboard-nvim

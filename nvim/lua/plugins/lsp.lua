@@ -95,3 +95,26 @@ end
 if pcall(require, 'fidget') then
   require('fidget').setup()
 end
+
+local has_null_ls, null_ls = pcall(require, 'null-ls')
+if has_null_ls then
+  local has_mason_null_ls, mason_null_ls = pcall(require, 'mason-null-ls')
+  if has_mason_null_ls then
+    mason_null_ls.setup({
+      ensure_installed = { 'stylua' }
+    })
+    mason_null_ls.setup_handlers({
+      function(source_name, methods)
+        -- all sources with no handler get passed here
+
+        -- To keep the original functionality of `automatic_setup = true`,
+        -- please add the below.
+        require("mason-null-ls.automatic_setup")(source_name, methods)
+      end,
+      stylua = function(source_name, methods)
+        null_ls.register(null_ls.builtins.formatting.stylua)
+      end,
+    })
+  end
+  null_ls.setup()
+end

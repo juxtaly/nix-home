@@ -5,11 +5,19 @@ return function (use)
       'nvim-tree/nvim-web-devicons',
     },
     tag = 'nightly',
-    config = function()
-      require('nvim-tree').setup({
-        -- see :help nvim-tree-setup
+    config = function ()
+      local nt = require('nvim-tree')
+      local api = require('nvim-tree.api')
+      nt.setup({
       })
-      vim.keymap.set('n', '<leader>f', require('nvim-tree').toggle, { desc = 'Toggle NvimTree' })
-    end
+      vim.keymap.set('n', '<leader>f', function ()
+        api.tree.toggle({
+          find_file = true,
+        })
+      end, { silent = true, desc = 'Toggle NvimTree' })
+      vim.api.nvim_create_autocmd({"QuitPre"}, {
+        callback = api.tree.close,
+      })
+    end,
   })
 end

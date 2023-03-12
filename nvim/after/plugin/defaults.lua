@@ -13,8 +13,13 @@ if vim.g.neovide then
 end
 
 vim.keymap.set("n", "<leader>rr", function()
+	local ok, reload = pcall(require, "plenary.reload")
+	if ok then
+		reload.reload_module("init", true)
+	else
+		vim.cmd([[source $MYVIMRC]])
+	end
 	vim.cmd([[
-    source $MYVIMRC
     runtime! plugin/**/*.vim
     runtime! plugin/**/*.lua
     runtime! after/**/*.vim

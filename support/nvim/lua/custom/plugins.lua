@@ -39,6 +39,8 @@ local function plugins(use)
 		-- "surround",
 		-- project.nvim -- The superior project management solution for neovim.
 		"project",
+		-- nvim-nu -- Basic editor support for the nushell language
+		"nu",
 	}
 	for _, plugin in ipairs(plist) do
 		require("custom." .. plugin)(use)

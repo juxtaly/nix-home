@@ -6,6 +6,7 @@ return function(use)
 				open_mapping = [[<leader>t]],
 				insert_mappings = false,
 				terminal_mappings = false,
+				shell = "nu",
 			})
 			local set_terminal_keymaps = function()
 				local opts = { buffer = 0 }

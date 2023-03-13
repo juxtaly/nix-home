@@ -5,11 +5,13 @@
   ...
 }: {
   imports = [
-    ./user.nix
     ./zsh.nix
+    ./nushell.nix
     ./programs.nix
     ./nvim.nix
   ];
+  home.username = (import ./user.nix).username || "matrix";
+  home.homeDirectory = (import ./user.nix).homeDirectory || "/home/matrix";
   home.stateVersion = "23.05";
   home.sessionVariables = {
     COLORTERM = "truecolor";

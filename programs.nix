@@ -35,6 +35,7 @@
     nb
     w3m
     nmap
+    carapace # multi-shell multi-command argument completer
   ];
   program_list = [
     "git"

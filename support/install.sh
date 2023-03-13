@@ -22,18 +22,12 @@ install_home_manager() {
     . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 }
 
-generate_user_home() {
-    sed -e "s?@HOME@?${HOME}?" -e "s?@USER@?${USER}?" ./support/user.nix.in > ./user.nix
-}
-
 if ! command -v nix &> /dev/null; then
     echo "Installing nix..."
     install_nix
 else
     echo "Nix is already installed."
 fi
-
-test -e ./user.nix || generate_user_home
 
 if ! command -v home-manager &> /dev/null; then
     echo "Installing home-manager..."

@@ -3,8 +3,8 @@
   lib,
   pkgs,
   ...
-}: {
-  home.packages = with pkgs; [
+}: let
+  packages = with pkgs; [
     # Modern Command Line Tools
     ripgrep # grep
     fd # find
@@ -17,7 +17,7 @@
     tldr # man
     sd # sed
     difftastic # diff
-    # plocate # locate
+    # plocate   # locate
     # nnn
     mtr # traceroute
     hyperfine # benchmarking
@@ -36,86 +36,37 @@
     w3m
     nmap
   ];
-  # programs.tmux = {
-  #   enable = true;
-  #   keyMode = "vi";
-  #   terminal = "screen-256color";
-  #   baseIndex = 1;
-  #   prefix = "C-a";
-  #   tmuxinator.enable = true;
-  #   plugins = with pkgs; [
-  #     tmuxPlugins.resurrect
-  #     tmuxPlugins.continuum
-  #   ];
-  # };
-  programs.git = {
-    enable = true;
-    delta.enable = true;
-  };
-  programs.starship = {
-    enable = true;
-  };
-  programs.exa = {
-    enable = true;
-    enableAliases = true;
-  };
-  programs.bat = {
-    enable = true;
-    config = {
-      theme = "TwoDark";
-    };
-  };
-  programs.fzf = {
-    enable = true;
-    defaultCommand = "rg --files --hidden --glob '!.git'";
-    defaultOptions = ["--height=40%" "--layout=reverse" "--border" "--margin=1" "--padding=1"];
-  };
-  programs.mcfly = {
-    enable = true;
-    keyScheme = "vim";
-  };
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
-  programs.helix = {
-    enable = true;
-    settings = {
-      theme = "onedark";
-      editor.cursor-shape = {
-        insert = "bar";
-        normal = "block";
-        select = "underline";
-      };
-      editor.file-picker = {
-        hidden = false;
-      };
-    };
-  };
-  programs.zellij = {
-    enable = true;
-    settings = {
+  program_list = [
+    "git"
+    "starship"
+    "exa" # ls
+    "bat" # cat
+    "fzf"
+    "mcfly"
+    "direnv"
+    "zellij" # tmux
+    "btop" # htop
+    "broot" # tree
+    "jq"
+    "lazygit"
+    "pandoc"
+    "zoxide" # z
+  ];
+  configs = {
+    git.delta.enable = true;
+    exa.enableAliases = true;
+    bat.config = {theme = "TwoDark";};
+    fzf.defaultCommand = "rg --files --hidden --glob '!.git'";
+    fzf.defaultOptions = ["--height=40%" "--layout=reverse" "--border" "--margin=1" "--padding=1"];
+    mcfly.keyScheme = "vim";
+    direnv.nix-direnv.enable = true;
+    zellij.settings = {
       pane_frames = false;
       default_mode = "locked";
       default_layout = "compact";
     };
   };
-  programs.btop = {
-    enable = true;
-  };
-  programs.broot = {
-    enable = true;
-  };
-  programs.jq = {
-    enable = true;
-  };
-  programs.lazygit = {
-    enable = true;
-  };
-  programs.kakoune = {
-    enable = true;
-  };
-  programs.pandoc = {
-    enable = true;
-  };
+in {
+  home.packages = packages;
+  programs = lib.recursiveUpdate (lib.genAttrs program_list (_: {enable = true;})) configs;
 }

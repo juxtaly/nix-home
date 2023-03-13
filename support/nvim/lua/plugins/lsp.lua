@@ -4,17 +4,32 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Move to the next d
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostica in a floating window" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Add buffer diagnostics to the location list" })
 
-function _G.set_lsp_keymaps(bufnr)
-	local nmap = function(keys, func, desc)
+local _nmap = function(bufnr)
+	return function(keys, func, desc)
 		if desc then
 			desc = "LSP: " .. desc
 		end
 
 		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 	end
+end
 
-	nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+-- Keymaps that can be used for null_ls
+function _G.set_lsp_keymaps_basic(bufnr)
+	local nmap = _nmap(bufnr)
 	nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+	-- See `:help K` for why this keymap
+	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+	-- Create a command `:Format` local to the LSP buffer
+	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+		vim.lsp.buf.format()
+	end, { desc = "Format current buffer with LSP" })
+end
+
+function _G.set_lsp_keymaps(bufnr)
+	local nmap = _nmap(bufnr)
+	set_lsp_keymaps_basic(bufnr)
+	nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 
 	nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
 	nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
@@ -23,8 +38,6 @@ function _G.set_lsp_keymaps(bufnr)
 	nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
 	nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
-	-- See `:help K` for why this keymap
-	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
 	-- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
 	-- Lesser used LSP functionality
@@ -35,10 +48,6 @@ function _G.set_lsp_keymaps(bufnr)
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, "[W]orkspace [L]ist Folders")
 
-	-- Create a command `:Format` local to the LSP buffer
-	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-		vim.lsp.buf.format()
-	end, { desc = "Format current buffer with LSP" })
 end
 
 -- LSP settings.
@@ -154,9 +163,9 @@ if has_null_ls then
 		-- Anything not supported by mason
 	}
 	local packages = {
-		code_actions = { "statix" },
+		code_actions = { "statix", "shellcheck" },
 		completion = {},
-		diagnostics = { "deadnix", "statix" },
+		diagnostics = { "deadnix", "statix", "shellcheck" },
 		formatting = { "alejandra" },
 		hover = {},
 	}

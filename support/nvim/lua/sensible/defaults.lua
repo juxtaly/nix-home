@@ -45,10 +45,10 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<C-j>", "<C-w>j", { silent = true, noremap = true })
-vim.keymap.set({ "n", "t" }, "<C-k>", "<C-w>k", { silent = true, noremap = true })
-vim.keymap.set({ "n", "t" }, "<C-h>", "<C-w>h", { silent = true, noremap = true })
-vim.keymap.set({ "n", "t" }, "<C-l>", "<C-w>l", { silent = true, noremap = true })
+vim.keymap.set({ "n", "t" }, "<C-j>", [[<Cmd>wincmd j<CR>]], { silent = true, noremap = true })
+vim.keymap.set({ "n", "t" }, "<C-k>", [[<Cmd>wincmd k<CR>]], { silent = true, noremap = true })
+vim.keymap.set({ "n", "t" }, "<C-h>", [[<Cmd>wincmd h<CR>]], { silent = true, noremap = true })
+vim.keymap.set({ "n", "t" }, "<C-l>", [[<Cmd>wincmd l<CR>]], { silent = true, noremap = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

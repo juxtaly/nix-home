@@ -36,7 +36,9 @@ local function plugins(use)
 		"alpha",
 		-- TODO: default mapping conflict with leap.nvim, consider change default mappings of leap.nvim
 		-- nvim-surround -- Add/change/delete surrounding delimiter pairs with ease. Written with ❤️ in Lua.
-		-- "surround"
+		-- "surround",
+		-- project.nvim -- The superior project management solution for neovim.
+		"project",
 	}
 	for _, plugin in ipairs(plist) do
 		require("custom." .. plugin)(use)

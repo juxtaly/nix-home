@@ -8,7 +8,13 @@ return function(use)
 		config = function()
 			local nt = require("nvim-tree")
 			local api = require("nvim-tree.api")
-			nt.setup({})
+			nt.setup({
+				sync_root_with_cwd = true,
+				update_focused_file = {
+					enable = true,
+					update_root = true,
+				},
+			})
 			vim.keymap.set("n", "<leader>f", function()
 				api.tree.toggle({
 					find_file = true,

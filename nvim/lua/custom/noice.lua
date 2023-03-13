@@ -17,8 +17,8 @@ return function(use)
 				--      https://github.com/neovim/neovim/issues/22344
 				-- Seems like disabling messages suspends these issues
 				messages = {
-					enabled = true,
-					view = false, -- default view for messages
+					enabled = false,
+					-- view = false, -- default view for messages
 					-- view_error = "notify", -- view for errors
 					-- view_warn = "notify", -- view for warnings
 					-- view_history = "messages", -- view for :messages

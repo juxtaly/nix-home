@@ -19,8 +19,8 @@ in {
     shellAliases = {
       cat = "bat";
     };
-    initExtra = builtins.readFile ./zsh/zshrc;
-    envExtra = builtins.readFile ./zsh/zshenv;
+    initExtra = builtins.readFile ./support/zsh/zshrc;
+    envExtra = builtins.readFile ./support/zsh/zshenv;
     plugins = with pkgs; [
       {
         name = "z";

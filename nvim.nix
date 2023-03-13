@@ -5,7 +5,7 @@
   ...
 }: {
   programs.neovim = let
-    neovimPrivateDir = ./nvim;
+    neovimPrivateDir = ./support/nvim;
   in {
     enable = true;
     vimAlias = true;

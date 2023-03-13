@@ -3,7 +3,14 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  nu_scripts = pkgs.fetchFromGitHub {
+    owner = "nushell";
+    repo = "nu_scripts";
+    rev = "main";
+    sha256 = "sha256-Sl7Y6pLv8hKWH77gQgXpsSG0Mr41vjrOhGuIRkQeMj4=";
+  };
+in {
   # Tools may not be compatible
   # mcfly
   # fzf
@@ -28,6 +35,7 @@
       if not ('~/.carapace.nu' | path exists) {
         carapace _carapace nushell | save -f ~/.carapace.nu
       }
+      let-env NU_LIB_DIRS = ($env.NU_LIB_DIRS | prepend [ ${nu_scripts} ])
     '';
     extraConfig = ''
       source ~/.zoxide.nu

@@ -59,6 +59,16 @@ local servers = {
 	-- rust_analyzer = {},
 	lua_ls = {},
 	-- tsserver = {},
+	fennel_language_server = {
+		fennel = {
+			workspace = {
+				library = vim.api.nvim_list_runtime_paths(),
+			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+		},
+	},
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -80,12 +90,35 @@ if ok then
 		ensure_installed = vim.tbl_keys(servers),
 	})
 
+	local lspconfig = require("lspconfig")
+
 	mason_lspconfig.setup_handlers({
 		function(server_name)
-			require("lspconfig")[server_name].setup({
+			lspconfig[server_name].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
 				settings = servers[server_name],
+			})
+		end,
+		["rust_analyzer"] = function()
+			require("custom.rust-tools.setup")()
+		end,
+		["hls"] = function()
+			-- in ftplugin
+		end,
+		["fennel_language_server"] = function()
+			require("lspconfig.configs").fennel_language_server = {
+				default_config = {
+					cmd = { "fennel-language-server" },
+					filetypes = { "fennel" },
+					single_file_support = true,
+					root_dir = lspconfig.util.root_pattern("fnl"),
+				},
+			}
+			lspconfig.fennel_language_server.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				settings = servers["fennel_language_server"],
 			})
 		end,
 	})

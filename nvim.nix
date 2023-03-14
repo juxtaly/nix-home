@@ -13,7 +13,7 @@
     extraLuaConfig = ''
       vim.opt.runtimepath:append('${neovimPrivateDir}')
       vim.opt.runtimepath:append('${neovimPrivateDir}/after')
-      require('init')
+      require('user').setup()
     '';
   };
 }

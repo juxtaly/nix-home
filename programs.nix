@@ -37,6 +37,7 @@
     nmap
     carapace # multi-shell multi-command argument completer
     shellcheck
+    just # make
   ];
   program_list = [
     "git"

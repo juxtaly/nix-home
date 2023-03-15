@@ -6,7 +6,6 @@
 }: {
   imports = [
     ./zsh.nix
-    ./nushell.nix
     ./programs.nix
     ./nvim.nix
   ];
@@ -21,8 +20,6 @@
     hm = "home-manager";
     lg = "lazygit";
     cat = "bat";
-    nvim-packer-compile = "nvim --headless -c 'autocmd User PackerCompileDone quitall' -c 'PackerCompile'";
-    nvim-packer-sync = "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'";
   };
   programs.home-manager.enable = true;
 }

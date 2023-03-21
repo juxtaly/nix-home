@@ -1,3 +1,5 @@
+Prefer NixOS Module: https://github.com/atriw/config
+
 # Usage
 
 ## NixOS
